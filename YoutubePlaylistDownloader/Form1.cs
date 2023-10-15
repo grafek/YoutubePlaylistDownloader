@@ -44,8 +44,8 @@ namespace YoutubePlaylistDownloader
 
                         foreach (var video in videos)
                         {
-                                var streamInfoSet = await youtubeClient.Videos.Streams.GetManifestAsync(video.Id);
-                                var audioStreamInfo = streamInfoSet.GetAudioOnlyStreams().FirstOrDefault();
+                            var streamInfoSet = await youtubeClient.Videos.Streams.GetManifestAsync(video.Id);
+                            var audioStreamInfo = streamInfoSet.GetAudioOnlyStreams().FirstOrDefault();
 
                             if (audioStreamInfo != null)
                             {
@@ -60,7 +60,7 @@ namespace YoutubePlaylistDownloader
 
                                 StatusLabel.Text = string.Empty;
                             }
-                         
+
                         }
 
                         MessageBox.Show("Download completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -87,7 +87,7 @@ namespace YoutubePlaylistDownloader
         private async void SubmitButton_Click_1(object sender, EventArgs e)
         {
             string playlistLink = URLTextbox.Text;
-            string regexPattern = @"^https:\/\/www\.youtube\.com\/playlist\?list=[A-Za-z0-9_-]+$";
+            string regexPattern = @"^(?:https?:\/\/)?(?:www\.)?youtube\.com\/playlist\?list=([A-Za-z0-9_\-]+)(?:&[^&]+)*$";
             if (!Regex.IsMatch(playlistLink, regexPattern))
             {
                 MessageBox.Show("Invalid youtube playlist URL");
