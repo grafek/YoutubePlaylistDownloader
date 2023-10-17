@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubePlaylistDownloader", "YoutubePlaylistDownloader\YoutubePlaylistDownloader.csproj", "{52170D64-FF3C-420B-AC91-B430C1D1E2F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubePlaylistDownloader", "YoutubePlaylistDownloader.csproj", "{52170D64-FF3C-420B-AC91-B430C1D1E2F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4E390FD9-4CF6-4C34-AB87-B32D3577CFA2}
+		SolutionGuid = {4679382A-F1D0-4599-B181-C2BB8E341406}
 	EndGlobalSection
 EndGlobal

@@ -25,6 +25,8 @@ namespace YoutubePlaylistDownloader
 
         private async Task DownloadPlaylistVideosAsync(string playlistUrl)
         {
+            var maxVideoDuration = new TimeSpan(0, 15, 0);
+
             try
             {
                 var youtubeClient = new YoutubeClient();
@@ -38,6 +40,8 @@ namespace YoutubePlaylistDownloader
                     folderBrowserDialog.Description = "Select a folder to save downloaded audio";
                     DialogResult result = folderBrowserDialog.ShowDialog();
 
+                    var selectedPath = folderBrowserDialog.SelectedPath;
+
                     if (result == DialogResult.OK)
                     {
                         string selectedFolder = folderBrowserDialog.SelectedPath;
@@ -47,9 +51,30 @@ namespace YoutubePlaylistDownloader
                             var streamInfoSet = await youtubeClient.Videos.Streams.GetManifestAsync(video.Id);
                             var audioStreamInfo = streamInfoSet.GetAudioOnlyStreams().FirstOrDefault();
 
+                            var duration = video.Duration;
+
+                            if (duration > maxVideoDuration)
+                            {
+                                StatusLabel.Text = "Song too long to process, skipping..";
+                                await Task.Delay(3000);
+                                continue;
+                            }
+
+                            StatusLabel.Text = duration.ToString();
+
                             if (audioStreamInfo != null)
                             {
                                 string videoTitle = string.Join("_", video.Title.Split(Path.GetInvalidFileNameChars()));
+
+                                string videoFullPath = $"{selectedPath}/{videoTitle}.wav";
+
+                                if (File.Exists(videoFullPath))
+                                {
+                                    StatusLabel.Text = "File already exists, skipping..";
+                                    await Task.Delay(3000);
+                                    continue;
+                                }
+
                                 var fileName = $"{videoTitle}.wav";
                                 var filePath = Path.Combine(selectedFolder, fileName);
 
@@ -87,7 +112,7 @@ namespace YoutubePlaylistDownloader
         private async void SubmitButton_Click_1(object sender, EventArgs e)
         {
             string playlistLink = URLTextbox.Text;
-            string regexPattern = @"^(?:https?:\/\/)?(?:www\.)?youtube\.com\/playlist\?list=([A-Za-z0-9_\-]+)(?:&[^&]+)*$";
+            string regexPattern = @"^(?:https?:\/\/)?(?:www\.)?youtube\.com\/(playlist\?list=|watch\?v=)([A-Za-z0-9_\-]+)(?:&[^&]+)*$";
             if (!Regex.IsMatch(playlistLink, regexPattern))
             {
                 MessageBox.Show("Invalid youtube playlist URL");
@@ -102,4 +127,3 @@ namespace YoutubePlaylistDownloader
 }
 
 
-    
