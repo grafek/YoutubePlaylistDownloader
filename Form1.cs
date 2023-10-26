@@ -75,19 +75,17 @@ namespace YoutubePlaylistDownloader
                                     continue;
                                 }
 
-                                var fileName = $"{videoTitle}.wav";
+                                var fileName = $"{videoTitle}.flac";
                                 var filePath = Path.Combine(selectedFolder, fileName);
 
                                 StatusLabel.Text = $"Downloading: {fileName}";
 
                                 var ffMpeg = new FFMpegConverter();
-                                ffMpeg.ConvertMedia(audioStreamInfo.Url, filePath, "wav");
+                                ffMpeg.ConvertMedia(audioStreamInfo.Url, filePath, "flac");
 
                                 StatusLabel.Text = string.Empty;
                             }
-
                         }
-
                         MessageBox.Show("Download completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
